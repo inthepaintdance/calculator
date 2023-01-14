@@ -3,12 +3,31 @@ import { BackspaceIcon } from '@heroicons/react/20/solid'
 import { useState } from 'react'
 import HistoryPanel from './HistoryPanel'
 import Display from './Display'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import axios from 'axios'
 
 const Calculator = () => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [equation, setEquation] = useState('')
     const [result, setResult] = useState(0)
+
+    // Access the client
+    const queryClient = useQueryClient()
+
+    const createEquation = async ({ equation, result }) => {
+        const res = await axios.post('/api/equation/create', { equation, result })
+        return res
+    }
+
+    // Create Equation Mutation
+    const createEquationMutation = useMutation({
+        mutationFn: createEquation,
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ['history'] })
+        },
+    })
 
     const toggleMenuHandler = () => {
         setIsMenuOpen(!isMenuOpen)
@@ -43,7 +62,12 @@ const Calculator = () => {
             const b = tokens[2]
             const res = calculate(a, op, b)
             setResult(res)
+            createEquationMutation.mutate({equation, result: res})
         } else if (btn.type === 'number') {
+            if (btn.text === 0 && equation === '0') {
+                setEquation('0')
+                return
+            }
             setEquation(prev => prev.concat(btn.text.toString()))
         } else if (btn.type === 'main-operator') {
             setEquation(prev => prev.concat(` ${btn.text.toString()} `))

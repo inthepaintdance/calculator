@@ -8,6 +8,7 @@ export type Button = {
 export type ButtonLayout = Array<Button>
 export const divideEntity = String.fromCharCode(247);
 export const multiplyEntity = String.fromCharCode(215);
+export const smile = String.fromCodePoint(128513);
 
 export const getButtonLayout = () => {
 
@@ -36,31 +37,3 @@ export const getButtonLayout = () => {
 
     return buttonLayout
 }
-
-export const getBtnStyle = (type: ButtonType) => {
-    let style: string = ''
-
-    switch (type) {
-        case 'backspace':
-            style = 'text-teal-500'
-            break;
-        case 'equal':
-            style = 'bg-teal-500 text-gray-200 rounded-br-lg'
-            break;
-        case 'number':
-            style = 'text-gray-200'
-            break
-        case 'operator':
-            style = 'text-teal-500'
-            break;
-        case 'main-operator':
-            style = 'text-teal-500 bg-teal-500 bg-opacity-25 hover:bg-opacity-40'
-            break
-
-        default:
-            style = 'text-gray-200'
-            break
-    }
-
-    return style
-} 

@@ -130,7 +130,7 @@ const Calculator = () => {
 
             {/*---- History Panel----*/}
             {isMenuOpen &&
-                <HistoryPanel historyList={[{ equation: 'equation', result: 'result' }]} />
+                <HistoryPanel />
             }
 
             {/*---- Calculator Display----*/}

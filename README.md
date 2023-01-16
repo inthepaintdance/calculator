@@ -5,7 +5,7 @@ A basic calculator project written in `Next.js` and `Typescript`
 https://calculator-eosin-two.vercel.app/
 
 ## Getting Started
-First, create a `.env` file and provide a postgres database connection string
+First, create a `.env` file and provide a postgres database connection string, then run the `prisma` migrations
 ```
 DATABASE_URL=<Your connection string>
 ```
